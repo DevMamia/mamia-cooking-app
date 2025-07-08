@@ -1,0 +1,150 @@
+meta:
+  version: 1.1
+  description: "Non-negotiable project rules Claude & humans must satisfy."
+rules:
+  # Environment & Dependencies
+  - id: node-version
+    desc: "Code must run on Node 18 LTS; add .nvmrc"
+    tag: env
+  - id: deps-audit
+    desc: "Run 'npm audit' - no high/critical vulnerabilities"
+    tag: security
+  - id: deps-outdated
+    desc: "Check 'npm outdated' - major versions documented in ADR"
+    tag: maintenance
+  
+  # UI & Design
+  - id: primary-colour
+    desc: "Use #E35336 for primary accents."
+    tag: ui
+  - id: a11y-contrast
+    desc: "Text/background contrast ≥ 4.5:1."
+    tag: accessibility
+  - id: a11y-keyboard
+    desc: "All interactive elements keyboard accessible"
+    tag: accessibility
+  - id: responsive-mobile
+    desc: "Test on mobile viewports 320px-768px"
+    tag: ui
+  
+  # Security - API & Data
+  - id: api-no-client-keys
+    desc: "Never expose secret keys in client bundle."
+    tag: security
+  - id: api-rate-limiting
+    desc: "All API routes have rate limiting (100 req/min default)"
+    tag: security
+  - id: api-input-validation
+    desc: "Validate all API inputs with Zod schemas"
+    tag: security
+  - id: sql-injection
+    desc: "Use parameterized queries, never string concatenation"
+    tag: security
+  - id: xss-prevention
+    desc: "Sanitize user inputs, use CSP headers"
+    tag: security
+  - id: auth-session-secure
+    desc: "Secure session cookies (httpOnly, secure, sameSite)"
+    tag: security
+  - id: pii-protection
+    desc: "No PII in logs, encrypt sensitive data at rest"
+    tag: security
+  
+  # Performance & Optimization
+  - id: perf-bundle
+    desc: "Client JS ≤ 150 kB gzip."
+    tag: performance
+  - id: perf-images
+    desc: "Images optimized (WebP/AVIF), lazy loading enabled"
+    tag: performance
+  - id: perf-core-vitals
+    desc: "LCP < 2.5s, FID < 100ms, CLS < 0.1"
+    tag: performance
+  - id: perf-lighthouse
+    desc: "Lighthouse score ≥ 90 (Performance, A11y, Best Practices)"
+    tag: performance
+  
+  # Voice & Caching
+  - id: tts-cache
+    desc: "Check Redis→S3 before calling ElevenLabs."
+    tag: voice
+  - id: cache-strategy
+    desc: "Cache headers set correctly (public/private, max-age)"
+    tag: performance
+  - id: cache-invalidation
+    desc: "Cache invalidation strategy documented"
+    tag: performance
+  
+  # Database & Data Integrity
+  - id: db-migrations
+    desc: "All DB changes via migrations, never direct SQL"
+    tag: database
+  - id: db-backups
+    desc: "Verify backup strategy, test restore process"
+    tag: database
+  - id: db-rls-policies
+    desc: "RLS policies tested for all user roles"
+    tag: security
+  - id: db-indexes
+    desc: "Query performance analyzed, indexes optimized"
+    tag: performance
+  
+  # Error Handling & Monitoring
+  - id: error-boundaries
+    desc: "React error boundaries catch and log errors"
+    tag: reliability
+  - id: error-logging
+    desc: "Server errors logged with context (no sensitive data)"
+    tag: reliability
+  - id: error-user-friendly
+    desc: "User-facing error messages are helpful, not technical"
+    tag: ux
+  - id: health-checks
+    desc: "API health endpoints return meaningful status"
+    tag: reliability
+  
+  # Testing & Quality
+  - id: test-coverage
+    desc: "Unit test coverage ≥ 80% for critical paths"
+    tag: testing
+  - id: test-e2e
+    desc: "E2E tests cover main user journeys"
+    tag: testing
+  - id: test-accessibility
+    desc: "Accessibility tests with @testing-library/jest-dom"
+    tag: testing
+  
+  # Deployment & Operations
+  - id: deploy-env-vars
+    desc: "All required env vars documented in .env.example"
+    tag: deployment
+  - id: deploy-rollback
+    desc: "Rollback strategy documented and tested"
+    tag: deployment
+  - id: deploy-zero-downtime
+    desc: "Deployment process doesn't break existing sessions"
+    tag: deployment
+  - id: monitoring-alerts
+    desc: "Critical metrics have alerts (error rate, response time)"
+    tag: monitoring
+  
+  # Compliance & Privacy
+  - id: gdpr-compliance
+    desc: "User data deletion/export capabilities implemented"
+    tag: compliance
+  - id: privacy-policy
+    desc: "Privacy policy updated if data collection changes"
+    tag: compliance
+  - id: cookie-consent
+    desc: "Cookie consent for non-essential cookies"
+    tag: compliance
+done_when:
+  - compile_ok
+  - unit_tests_green
+  - prettier_eslint_ok
+  - security_audit_clean
+  - performance_budget_met
+  - accessibility_tested
+  - db_migrations_applied
+  - env_vars_documented
+  - checklist_pass 

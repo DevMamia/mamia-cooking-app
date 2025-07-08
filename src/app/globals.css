@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+:root {
+  --radius: 0.625rem;
+  
+  /* MAMIA Color System - Using hex values for better compatibility */
+  --background: #FFF8DC; /* Cream */
+  --foreground: #3E2723; /* Warm Brown */
+  --card: #FFFFFF;
+  --card-foreground: #3E2723;
+  --popover: #FFFFFF;
+  --popover-foreground: #3E2723;
+  --primary: #E35336; /* Terracotta */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F5F4; /* Light neutral */
+  --secondary-foreground: #3E2723;
+  --muted: #F5F5F4;
+  --muted-foreground: #78716C;
+  --accent: #9CAF88; /* Sage green */
+  --accent-foreground: #FFFFFF;
+  --destructive: #DC2626;
+  --border: #E7E5E4;
+  --input: #F5F5F4;
+  --ring: #E35336;
+}
+
+/* Dark Mode - Essential for Kitchen/Cooking Mode */
+.dark {
+  --background: #1C1917; /* Dark brown */
+  --foreground: #FAFAF9; /* Light cream */
+  --card: #292524; /* Darker brown */
+  --card-foreground: #FAFAF9;
+  --popover: #292524;
+  --popover-foreground: #FAFAF9;
+  --primary: #F97316; /* Brighter terracotta for dark mode */
+  --primary-foreground: #FFFFFF;
+  --secondary: #44403C; /* Medium brown */
+  --secondary-foreground: #FAFAF9;
+  --muted: #44403C;
+  --muted-foreground: #A8A29E;
+  --accent: #9CAF88; /* Sage green - consistent */
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --border: #44403C;
+  --input: #44403C;
+  --ring: #F97316;
+}
+
+@layer base {
+  * {
+    @apply border-gray-300 outline-orange-500/50;
+  }
+  
+  body {
+    @apply font-sans;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+  
+  /* Touch target minimum size */
+  .touch-target {
+    @apply min-h-12 min-w-12;
+  }
+  
+  /* Kitchen-safe text sizing */
+  .kitchen-text {
+    @apply text-xl leading-relaxed;
+  }
+  
+  /* High contrast mode for cooking */
+  .cooking-mode {
+    @apply dark;
+  }
+  
+  .cooking-mode * {
+    @apply text-2xl;
+  }
+}
+
+/* MAMIA Custom Styles */
+@layer components {
+  /* Mama-specific theming */
+  .nonna-theme {
+    --accent: #8B4513; /* Rustic Brown */
+    --accent-secondary: #DAA520; /* Antique Gold */
+  }
+  
+  .abuela-theme {
+    --accent: #D2001F; /* Fiesta Red */
+    --accent-secondary: #FFD700; /* Sunshine Yellow */
+  }
+  
+  .mae-theme {
+    --accent: #F4A460; /* Saffron Gold */
+    --accent-secondary: #8FBC8F; /* Bamboo Green */
+  }
+  
+  /* Polaroid card component styles */
+  .polaroid-card {
+    @apply bg-white rounded-lg shadow-lg border border-gray-300 p-4 rotate-1 hover:rotate-0 transition-all duration-300 hover:shadow-xl;
+  }
+  
+  .polaroid-caption {
+    @apply font-mono text-base text-gray-700 text-center mt-2;
+  }
+  
+  /* Voice interface components */
+  .voice-indicator {
+    @apply inline-flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  
+  .voice-indicator.listening {
+    @apply animate-pulse;
+    background-color: var(--accent);
+  }
+  
+  .voice-indicator.speaking {
+    @apply animate-ping;
+    background-color: var(--primary);
+  }
+  
+  /* Waveform bars */
+  .waveform-bar {
+    @apply animate-pulse;
+    background-color: var(--primary);
+  }
+  
+  /* Recipe card styles */
+  .recipe-card {
+    @apply rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-300;
+    background-color: var(--card);
+    color: var(--card-foreground);
+  }
+  
+  .recipe-card.offline {
+    @apply border-gray-400 bg-gray-100;
+  }
+  
+  .recipe-card.offline::after {
+    content: 'Offline';
+    @apply absolute top-2 right-2 bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded;
+  }
+  
+  /* Kitchen-safe buttons */
+  .kitchen-button {
+    @apply min-h-12 rounded-lg font-medium transition-colors duration-200 px-6 py-3 text-xl;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  
+  .kitchen-button:hover {
+    @apply opacity-90;
+  }
+  
+  /* Kitchen-safe text inputs */
+  .kitchen-text-input {
+    @apply min-h-12 text-xl border border-gray-300 rounded-lg px-4 py-3;
+    background-color: var(--input);
+  }
+  
+  /* Navigation styles */
+  .nav-item {
+    @apply flex flex-col items-center justify-center min-h-12 min-w-12 text-sm font-medium transition-colors duration-200 rounded-lg;
+  }
+  
+  .nav-item.active {
+    @apply bg-orange-100;
+    color: var(--primary);
+  }
+  
+  /* Focus styles for accessibility */
+  .accessibility-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2;
+  }
+  
+  /* Loading skeleton */
+  .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+  
+  /* Error and success states */
+  .error-state {
+    @apply bg-red-50 border border-red-200 text-red-800 rounded-lg p-4;
+  }
+  
+  .success-state {
+    @apply bg-green-50 border border-green-200 text-green-800 rounded-lg p-4;
+  }
+  
+  /* MAMIA Header Styling */
+  .mamia-header {
+    @apply shadow-lg;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  
+  /* MAMIA Navigation */
+  .mamia-nav {
+    @apply border-t border-gray-300 shadow-lg;
+    background-color: var(--card);
+  }
+  
+  /* Mama Card Styling */
+  .mama-card {
+    @apply polaroid-card bg-white p-6 space-y-4;
+  }
+}
