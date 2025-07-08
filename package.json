@@ -28,6 +28,7 @@
     "handoff": "node scripts/handoff.js"
   },
   "dependencies": {
+    "@fontsource/caveat": "^5.2.6",
     "@playwright/mcp": "^0.0.29",
     "@playwright/test": "^1.53.2",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -45,7 +46,9 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
+    "embla-carousel-react": "^8.6.0",
     "express-rate-limit": "^7.5.1",
+    "framer-motion": "^12.23.0",
     "helmet": "^8.1.0",
     "lucide-react": "^0.525.0",
     "next": "15.3.5",

@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Kalam, Caveat } from "next/font/google";
+import { MobileHeader } from "@/components/ui/MobileHeader";
+import { BottomNav } from "@/components/navigation/BottomNav";
 
 // Google Fonts for handwritten text
 const kalam = Kalam({
@@ -20,6 +22,12 @@ export const metadata: Metadata = {
   description: "Discover, save, and cook delicious recipes with MAMIA.",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -28,8 +36,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${kalam.variable} ${caveat.variable} bg-background min-h-screen font-sans text-foreground`}>
-        {/* The main content will be handled by individual pages using LayoutWrapper */}
-        {children}
+        <div className="mobile-container">
+          {/* Fixed Mobile Header */}
+          <MobileHeader />
+          
+          {/* Main Content Area */}
+          <main className="content-area">
+            {children}
+          </main>
+          
+          {/* Fixed Bottom Navigation */}
+          <BottomNav />
+        </div>
       </body>
     </html>
   );
