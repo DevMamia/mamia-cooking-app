@@ -122,21 +122,27 @@
 @layer components {
   /* Button variants */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg font-medium transition-colors touch-target;
+    @apply hover:opacity-90 px-4 py-2 rounded-lg font-medium transition-colors;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
   }
   
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-lg font-medium transition-colors touch-target;
+    @apply hover:opacity-90 px-4 py-2 rounded-lg font-medium transition-colors;
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
   }
   
   /* Card component */
   .card {
-    @apply bg-card text-card-foreground rounded-lg border border-border shadow-sm;
+    @apply rounded-lg border border-gray-300 shadow-sm;
+    background-color: var(--card);
+    color: var(--card-foreground);
   }
   
   /* Navigation styles */
   .nav-item {
-    @apply flex flex-col items-center justify-center touch-target-large transition-all duration-200 rounded-lg;
+    @apply flex flex-col items-center justify-center transition-all duration-200 rounded-lg;
   }
   
   .nav-item.active {
@@ -145,7 +151,7 @@
   }
   
   .nav-item:hover {
-    @apply bg-muted/50;
+    background-color: rgba(0,0,0,0.04);
   }
   
   /* Mobile header */
@@ -189,6 +195,91 @@
   
   /* Focus styles for accessibility */
   .focus-visible {
-    @apply outline-none ring-2 ring-primary ring-offset-2;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary);
   }
+  
+  /* Carousel full-width breakout */
+  .carousel-full-width {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Ensure carousel works on mobile */
+  @media (max-width: 480px) {
+    .carousel-full-width {
+      margin-left: -1rem;
+      margin-right: -1rem;
+      width: calc(100% + 2rem);
+    }
+  }
+  
+  /* Embla carousel specific styles */
+  .embla__container {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+  
+  .embla__slide {
+    flex: 0 0 280px !important;
+    min-width: 280px !important;
+  }
+
+  /* Mobile embla slide full width */
+  @media (max-width: 640px) {
+    .embla__slide {
+      flex: 0 0 100% !important;
+      min-width: 100% !important;
+    }
+  }
+  
+  /* Temporary debug - remove after fixing */
+  [class*="flex"] {
+    display: flex !important;
+  }
+  
+  /* Force horizontal carousel */
+  .overflow-hidden > div {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  /* Carousel container generic utility */
+  .carousel-container {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carousel-card {
+    scroll-snap-align: center;
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    .carousel-container {
+      -webkit-overflow-scrolling: touch;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+  }
+
+  /* Force horizontal on mobile */
+  @media (max-width: 640px) {
+    .flex {
+      display: flex !important;
+      flex-direction: row !important;
+    }
+
+    /* Hide scrollbars on mobile */
+    *::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
 }

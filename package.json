@@ -7,7 +7,7 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0",
     "dev:turbo": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -25,7 +25,10 @@
     "security-check": "node scripts/security-check.js",
     "health-check": "npm run check-rules && npm run security-check",
     "precommit": "npm run health-check",
-    "handoff": "node scripts/handoff.js"
+    "handoff": "node scripts/handoff.js",
+    "voice:pre-generate": "node scripts/pre-generate-voice.js",
+    "voice:stats": "curl -s http://localhost:3000/api/voice/generate?action=stats | jq",
+    "voice:health": "curl -s http://localhost:3000/api/voice/generate?action=health | jq"
   },
   "dependencies": {
     "@fontsource/caveat": "^5.2.6",
@@ -46,6 +49,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.2.0",
     "embla-carousel-react": "^8.6.0",
     "express-rate-limit": "^7.5.1",
     "framer-motion": "^12.23.0",
@@ -56,16 +61,19 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/cors": "^2.8.19",
+    "@types/crypto-js": "^4.2.2",
     "@types/express-rate-limit": "^5.1.3",
     "@types/helmet": "^0.0.48",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "9.30.1",
     "eslint-config-next": "15.3.5",
     "rimraf": "^6.0.1",

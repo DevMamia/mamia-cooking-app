@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAMIA - Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Caveat', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d3748;
+            padding: 1rem;
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid #e2e8f0;
+        }
+
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #718096;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .features {
+            text-align: left;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #4299e1;
+        }
+
+        .features h3 {
+            font-size: 1.4rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features li::before {
+            content: "🍳";
+            font-size: 1.2rem;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 500;
+            margin-top: 1.5rem;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .status.offline {
+            background: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+
+        .status.online {
+            background: #c6f6d5;
+            color: #2f855a;
+            border: 1px solid #9ae6b4;
+        }
+
+        .cached-recipes {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .cached-recipes h4 {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .recipe-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .recipe-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+        }
+
+        .recipe-item:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 640px) {
+            .offline-container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📱</div>
+        <h1>You're Offline</h1>
+        <p class="subtitle">No worries! MAMIA works offline too. You can still access your cached recipes and continue cooking.</p>
+        
+        <div class="features">
+            <h3>🍳 Available Offline</h3>
+            <ul>
+                <li>View cached recipes</li>
+                <li>Continue active cooking sessions</li>
+                <li>Access downloaded voice instructions</li>
+                <li>Browse your favorite Mamas</li>
+                <li>Review cooking history</li>
+            </ul>
+        </div>
+
+        <div id="status" class="status offline">
+            📡 Currently offline - some features may be limited
+        </div>
+
+        <button class="retry-button" onclick="checkConnection()">
+            🔄 Check Connection
+        </button>
+
+        <div class="cached-recipes" id="cachedRecipes" style="display: none;">
+            <h4>📚 Available Recipes</h4>
+            <div class="recipe-list" id="recipeList">
+                <!-- Cached recipes will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check network status
+        function updateNetworkStatus() {
+            const status = document.getElementById('status');
+            const isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                status.className = 'status online';
+                status.innerHTML = '🌐 Back online! You can now access all features.';
+            } else {
+                status.className = 'status offline';
+                status.innerHTML = '📡 Currently offline - some features may be limited';
+            }
+        }
+
+        // Check connection and try to reload
+        function checkConnection() {
+            const button = document.querySelector('.retry-button');
+            button.innerHTML = '🔄 Checking...';
+            button.disabled = true;
+            
+            // Try to fetch a small resource
+            fetch('/favicon.ico', { 
+                method: 'HEAD',
+                cache: 'no-cache'
+            })
+            .then(() => {
+                // If successful, redirect to main app
+                window.location.href = '/';
+            })
+            .catch(() => {
+                // Still offline
+                button.innerHTML = '🔄 Check Connection';
+                button.disabled = false;
+                updateNetworkStatus();
+                loadCachedRecipes();
+            });
+        }
+
+        // Load cached recipes from IndexedDB
+        async function loadCachedRecipes() {
+            try {
+                // Open IndexedDB
+                const dbRequest = indexedDB.open('MAMIA_Offline', 1);
+                
+                dbRequest.onsuccess = function(event) {
+                    const db = event.target.result;
+                    
+                    if (!db.objectStoreNames.contains('recipes')) {
+                        return;
+                    }
+                    
+                    const transaction = db.transaction(['recipes'], 'readonly');
+                    const store = transaction.objectStore('recipes');
+                    const request = store.getAll();
+                    
+                    request.onsuccess = function() {
+                        const recipes = request.result;
+                        if (recipes.length > 0) {
+                            displayCachedRecipes(recipes);
+                        }
+                    };
+                };
+            } catch (error) {
+                console.log('Could not load cached recipes:', error);
+            }
+        }
+
+        // Display cached recipes
+        function displayCachedRecipes(recipes) {
+            const container = document.getElementById('cachedRecipes');
+            const list = document.getElementById('recipeList');
+            
+            if (recipes.length === 0) {
+                return;
+            }
+            
+            list.innerHTML = recipes.map(recipe => 
+                `<div class="recipe-item">
+                    <strong>${recipe.title}</strong> - ${recipe.mamaId}
+                </div>`
+            ).join('');
+            
+            container.style.display = 'block';
+        }
+
+        // Event listeners
+        window.addEventListener('online', () => {
+            updateNetworkStatus();
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        });
+
+        window.addEventListener('offline', updateNetworkStatus);
+
+        // Initialize
+        updateNetworkStatus();
+        loadCachedRecipes();
+
+        // Auto-check connection every 30 seconds
+        setInterval(() => {
+            if (!navigator.onLine) {
+                fetch('/favicon.ico', { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                })
+                .then(() => {
+                    // Connection restored
+                    updateNetworkStatus();
+                })
+                .catch(() => {
+                    // Still offline
+                });
+            }
+        }, 30000);
+    </script>
+</body>
+</html> 

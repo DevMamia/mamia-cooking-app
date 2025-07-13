@@ -56,17 +56,17 @@ export function BottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-item ${active ? 'active' : ''} animate-scale`}
+                className={`nav-item ${active ? 'active' : ''} animate-scale px-2 py-2`}
               >
                 <Icon 
-                  size={24} 
+                  size={22} 
                   className={`mb-1 transition-colors duration-200 ${
                     active ? 'text-terracotta' : 'text-gray-600'
                   }`}
                   style={active ? { color: 'var(--terracotta)' } : {}}
                 />
                 <span 
-                  className={`text-xs font-medium transition-colors duration-200 ${
+                  className={`text-xs font-medium transition-colors duration-200 text-center ${
                     active ? 'text-terracotta' : 'text-gray-600'
                   }`}
                   style={active ? { color: 'var(--terracotta)' } : {}}

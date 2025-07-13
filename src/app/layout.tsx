@@ -1,31 +1,65 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import { Kalam, Caveat } from "next/font/google";
-import { MobileHeader } from "@/components/ui/MobileHeader";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import { BottomNav } from "@/components/navigation/BottomNav";
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 
-// Google Fonts for handwritten text
-const kalam = Kalam({
-  subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  variable: "--font-kalam",
-});
-
-const caveat = Caveat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-caveat",
-});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "MAMIA Cooking App",
-  description: "Discover, save, and cook delicious recipes with MAMIA.",
+  title: 'MAMIA - Voice-Guided Cooking with Love',
+  description: 'Learn to cook with AI grandmothers who guide you through traditional recipes with voice instructions and cultural stories.',
+  keywords: ['cooking', 'recipes', 'voice-guided', 'traditional', 'cultural', 'AI', 'grandmother'],
+  authors: [{ name: 'MAMIA Team' }],
+  creator: 'MAMIA',
+  publisher: 'MAMIA',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'MAMIA',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'MAMIA',
+    title: 'MAMIA - Voice-Guided Cooking with Love',
+    description: 'Learn to cook with AI grandmothers who guide you through traditional recipes.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'MAMIA - Voice-Guided Cooking',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MAMIA - Voice-Guided Cooking with Love',
+    description: 'Learn to cook with AI grandmothers who guide you through traditional recipes.',
+    images: ['/og-image.png'],
+  },
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
 };
 
 export default function RootLayout({
@@ -35,18 +69,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${kalam.variable} ${caveat.variable} bg-background min-h-screen font-sans text-foreground`}>
-        <div className="mobile-container">
-          {/* Fixed Mobile Header */}
-          <MobileHeader />
-          
-          {/* Main Content Area */}
-          <main className="content-area">
+      <body className={inter.className}>
+        <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50">
+          {/* Accessible site-wide header */}
+          <header className="mobile-container py-3 flex items-center justify-center border-b border-gray-200">
+            <h1 className="text-lg font-bold" style={{ color: 'var(--terracotta)' }}>MAMIA</h1>
+          </header>
+          <main className="pb-20">
             {children}
           </main>
-          
-          {/* Fixed Bottom Navigation */}
           <BottomNav />
+          <ServiceWorkerRegistration />
         </div>
       </body>
     </html>

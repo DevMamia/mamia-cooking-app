@@ -16,8 +16,10 @@ export default function MamasPage() {
         </p>
       </div>
 
-      {/* Mama Carousel */}
-      <MamaCarousel />
+      {/* Mama Carousel - Full Width */}
+      <div className="carousel-full-width">
+        <MamaCarousel />
+      </div>
     </div>
   );
 } 
