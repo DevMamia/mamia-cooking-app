@@ -7,25 +7,25 @@ import { SaltPepperPhrase, VoiceVariation } from '../../types/voice';
 // Salt phrases (beginnings) - add personality to instructions
 const SALT_PHRASES: SaltPepperPhrase[] = [
   // Nonna Lucia (Italian)
-  { id: 'nonna-salt-1', type: 'salt', category: 'instruction', text: 'Bene, mio caro, now we', voiceId: 'nonna-lucia' },
-  { id: 'nonna-salt-2', type: 'salt', category: 'instruction', text: 'Ascolta, bambino, let\'s', voiceId: 'nonna-lucia' },
-  { id: 'nonna-salt-3', type: 'salt', category: 'instruction', text: 'Come, tesoro, time to', voiceId: 'nonna-lucia' },
-  { id: 'nonna-salt-4', type: 'salt', category: 'encouragement', text: 'Bravissimo! You\'re doing so well, now', voiceId: 'nonna-lucia' },
-  { id: 'nonna-salt-5', type: 'salt', category: 'timer', text: 'Perfetto, while we wait, remember', voiceId: 'nonna-lucia' },
+  { id: 'nonna-salt-1', type: 'salt', category: 'instruction', text: 'Bene, mio caro, now we', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-salt-2', type: 'salt', category: 'instruction', text: 'Ascolta, bambino, let\'s', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-salt-3', type: 'salt', category: 'instruction', text: 'Come, tesoro, time to', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-salt-4', type: 'salt', category: 'encouragement', text: 'Bravissimo! You\'re doing so well, now', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-salt-5', type: 'salt', category: 'timer', text: 'Perfetto, while we wait, remember', voiceId: 'lucia_voice_id' },
   
   // Abuela Rosa (Spanish)
-  { id: 'abuela-salt-1', type: 'salt', category: 'instruction', text: 'Muy bien, mi nieto, now we', voiceId: 'abuela-rosa' },
-  { id: 'abuela-salt-2', type: 'salt', category: 'instruction', text: 'Escucha, querido, let\'s', voiceId: 'abuela-rosa' },
-  { id: 'abuela-salt-3', type: 'salt', category: 'instruction', text: 'Ven acá, corazón, time to', voiceId: 'abuela-rosa' },
-  { id: 'abuela-salt-4', type: 'salt', category: 'encouragement', text: '¡Excelente! You\'re learning so fast, now', voiceId: 'abuela-rosa' },
-  { id: 'abuela-salt-5', type: 'salt', category: 'timer', text: 'Perfecto, while this cooks, let me tell you', voiceId: 'abuela-rosa' },
+  { id: 'abuela-salt-1', type: 'salt', category: 'instruction', text: 'Muy bien, mi nieto, now we', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-salt-2', type: 'salt', category: 'instruction', text: 'Escucha, querido, let\'s', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-salt-3', type: 'salt', category: 'instruction', text: 'Ven acá, corazón, time to', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-salt-4', type: 'salt', category: 'encouragement', text: '¡Excelente! You\'re learning so fast, now', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-salt-5', type: 'salt', category: 'timer', text: 'Perfecto, while this cooks, let me tell you', voiceId: 'rosa_voice_id' },
   
   // Mae Malai (Thai)
-  { id: 'mae-salt-1', type: 'salt', category: 'instruction', text: 'Dee mak, little one, now we', voiceId: 'mae-malai' },
-  { id: 'mae-salt-2', type: 'salt', category: 'instruction', text: 'Listen carefully, sweetie, let\'s', voiceId: 'mae-malai' },
-  { id: 'mae-salt-3', type: 'salt', category: 'instruction', text: 'Come here, darling, time to', voiceId: 'mae-malai' },
-  { id: 'mae-salt-4', type: 'salt', category: 'encouragement', text: 'Wonderful! You have good hands, now', voiceId: 'mae-malai' },
-  { id: 'mae-salt-5', type: 'salt', category: 'timer', text: 'Perfect, while we wait, I want to share', voiceId: 'mae-malai' },
+  { id: 'mae-salt-1', type: 'salt', category: 'instruction', text: 'Dee mak, little one, now we', voiceId: 'malai_voice_id' },
+  { id: 'mae-salt-2', type: 'salt', category: 'instruction', text: 'Listen carefully, sweetie, let\'s', voiceId: 'malai_voice_id' },
+  { id: 'mae-salt-3', type: 'salt', category: 'instruction', text: 'Come here, darling, time to', voiceId: 'malai_voice_id' },
+  { id: 'mae-salt-4', type: 'salt', category: 'encouragement', text: 'Wonderful! You have good hands, now', voiceId: 'malai_voice_id' },
+  { id: 'mae-salt-5', type: 'salt', category: 'timer', text: 'Perfect, while we wait, I want to share', voiceId: 'malai_voice_id' },
   
   // Generic salt phrases
   { id: 'generic-salt-1', type: 'salt', category: 'instruction', text: 'Alright, let\'s' },
@@ -36,25 +36,25 @@ const SALT_PHRASES: SaltPepperPhrase[] = [
 // Pepper phrases (endings) - add warmth and cultural notes
 const PEPPER_PHRASES: SaltPepperPhrase[] = [
   // Nonna Lucia (Italian)
-  { id: 'nonna-pepper-1', type: 'pepper', category: 'instruction', text: ', just like my nonna taught me in Tuscany', voiceId: 'nonna-lucia' },
-  { id: 'nonna-pepper-2', type: 'pepper', category: 'instruction', text: ', with amore and patience, sempre', voiceId: 'nonna-lucia' },
-  { id: 'nonna-pepper-3', type: 'pepper', category: 'instruction', text: ', the way we\'ve done it for generations', voiceId: 'nonna-lucia' },
-  { id: 'nonna-pepper-4', type: 'pepper', category: 'encouragement', text: ', you remind me of myself when I was young!', voiceId: 'nonna-lucia' },
-  { id: 'nonna-pepper-5', type: 'pepper', category: 'completion', text: ', and now you know the secret of la famiglia', voiceId: 'nonna-lucia' },
+  { id: 'nonna-pepper-1', type: 'pepper', category: 'instruction', text: ', just like my nonna taught me in Tuscany', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-pepper-2', type: 'pepper', category: 'instruction', text: ', with amore and patience, sempre', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-pepper-3', type: 'pepper', category: 'instruction', text: ', the way we\'ve done it for generations', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-pepper-4', type: 'pepper', category: 'encouragement', text: ', you remind me of myself when I was young!', voiceId: 'lucia_voice_id' },
+  { id: 'nonna-pepper-5', type: 'pepper', category: 'completion', text: ', and now you know the secret of la famiglia', voiceId: 'lucia_voice_id' },
   
   // Abuela Rosa (Spanish)
-  { id: 'abuela-pepper-1', type: 'pepper', category: 'instruction', text: ', just like we do in Valencia, with love', voiceId: 'abuela-rosa' },
-  { id: 'abuela-pepper-2', type: 'pepper', category: 'instruction', text: ', con cariño and the wisdom of generations', voiceId: 'abuela-rosa' },
-  { id: 'abuela-pepper-3', type: 'pepper', category: 'instruction', text: ', the traditional way, paso a paso', voiceId: 'abuela-rosa' },
-  { id: 'abuela-pepper-4', type: 'pepper', category: 'encouragement', text: ', you have the hands of a true cocinero!', voiceId: 'abuela-rosa' },
-  { id: 'abuela-pepper-5', type: 'pepper', category: 'completion', text: ', and now this recipe lives in your heart too', voiceId: 'abuela-rosa' },
+  { id: 'abuela-pepper-1', type: 'pepper', category: 'instruction', text: ', just like we do in Valencia, with love', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-pepper-2', type: 'pepper', category: 'instruction', text: ', con cariño and the wisdom of generations', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-pepper-3', type: 'pepper', category: 'instruction', text: ', the traditional way, paso a paso', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-pepper-4', type: 'pepper', category: 'encouragement', text: ', you have the hands of a true cocinero!', voiceId: 'rosa_voice_id' },
+  { id: 'abuela-pepper-5', type: 'pepper', category: 'completion', text: ', and now this recipe lives in your heart too', voiceId: 'rosa_voice_id' },
   
   // Mae Malai (Thai)
-  { id: 'mae-pepper-1', type: 'pepper', category: 'instruction', text: ', the way my grandmother showed me in Bangkok', voiceId: 'mae-malai' },
-  { id: 'mae-pepper-2', type: 'pepper', category: 'instruction', text: ', with mindfulness and respect for the ingredients', voiceId: 'mae-malai' },
-  { id: 'mae-pepper-3', type: 'pepper', category: 'instruction', text: ', following the ancient wisdom of Thai cooking', voiceId: 'mae-malai' },
-  { id: 'mae-pepper-4', type: 'pepper', category: 'encouragement', text: ', you have the spirit of a true Thai cook!', voiceId: 'mae-malai' },
-  { id: 'mae-pepper-5', type: 'pepper', category: 'completion', text: ', and now you carry forward our culinary heritage', voiceId: 'mae-malai' },
+  { id: 'mae-pepper-1', type: 'pepper', category: 'instruction', text: ', the way my grandmother showed me in Bangkok', voiceId: 'malai_voice_id' },
+  { id: 'mae-pepper-2', type: 'pepper', category: 'instruction', text: ', with mindfulness and respect for the ingredients', voiceId: 'malai_voice_id' },
+  { id: 'mae-pepper-3', type: 'pepper', category: 'instruction', text: ', following the ancient wisdom of Thai cooking', voiceId: 'malai_voice_id' },
+  { id: 'mae-pepper-4', type: 'pepper', category: 'encouragement', text: ', you have the spirit of a true Thai cook!', voiceId: 'malai_voice_id' },
+  { id: 'mae-pepper-5', type: 'pepper', category: 'completion', text: ', and now you carry forward our culinary heritage', voiceId: 'malai_voice_id' },
   
   // Generic pepper phrases
   { id: 'generic-pepper-1', type: 'pepper', category: 'instruction', text: ', taking your time to do it right' },
@@ -86,7 +86,7 @@ export class SaltPepperService {
     
     if (available.length === 0) return null;
     
-    return available[Math.floor(Math.random() * available.length)];
+    return available[Math.floor(Math.random() * available.length)] || null;
   }
 
   // Get random pepper phrase for voice and category
@@ -103,7 +103,7 @@ export class SaltPepperService {
     
     if (available.length === 0) return null;
     
-    return available[Math.floor(Math.random() * available.length)];
+    return available[Math.floor(Math.random() * available.length)] || null;
   }
 
   // Generate voice variation with salt and pepper
@@ -203,7 +203,7 @@ export class SaltPepperService {
     };
     
     // Count phrases by voice
-    const voices = ['nonna-lucia', 'abuela-rosa', 'mae-malai', 'generic'];
+    const voices = ['lucia_voice_id', 'rosa_voice_id', 'malai_voice_id', 'generic'];
     
     voices.forEach(voiceId => {
       const saltCount = SALT_PHRASES.filter(p => 

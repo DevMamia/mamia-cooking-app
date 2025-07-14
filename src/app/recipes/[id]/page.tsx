@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import { db } from "@/lib/database/supabase-service";
 import { Button } from "@/components/ui";
 import { ArrowLeft, Clock, Users, ChefHat, Heart } from "lucide-react";
@@ -150,10 +151,13 @@ export default function RecipeDetailPage() {
         {/* Recipe Image */}
         <div className="h-64 bg-gray-200 relative">
           {recipe.hero_image_url ? (
-            <img
+            <Image
               src={recipe.hero_image_url}
               alt={recipe.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-400">

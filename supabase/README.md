@@ -76,9 +76,9 @@ After running migrations, your database will have:
 
 ### `20250107_003_seed_data.sql`
 - Inserts 3 diverse Mamas:
-  - **Nonna Isabella** (Italian cuisine)
-  - **Mama Rosa** (Mexican cuisine)
-  - **Chef Kenji** (Japanese cuisine)
+  - **Nonna Lucia** (Italian cuisine)
+  - **Abuela Rosa** (Mexican cuisine)
+  - **Mae Malai** (Thai cuisine)
 - Adds 5 authentic recipes per Mama
 - Includes detailed ingredients and steps
 - Provides cultural context for each dish
@@ -108,20 +108,20 @@ After running migrations, your database will have:
 
 ### Mamas Included
 
-1. **Nonna Isabella** (Italian)
+1. **Nonna Lucia** (Italian)
    - Signature: Homemade Ragu Bolognese
    - Personality: Warm, patient, storytelling
    - Recipes: Carbonara, Osso Buco, Risotto, Tiramisu, Margherita Pizza
 
-2. **Mama Rosa** (Mexican)
+2. **Abuela Rosa** (Mexican)
    - Signature: Mole Negro Oaxaqueño
    - Personality: Energetic, passionate, cultural
    - Recipes: Chicken Mole, Tacos al Pastor, Chiles Rellenos, Pozole, Guacamole
 
-3. **Chef Kenji** (Japanese)
-   - Signature: Seasonal Kaiseki Menu
+3. **Mae Malai** (Thai)
+   - Signature: Green Curry with Fresh Herbs
    - Personality: Precise, mindful, seasonal
-   - Recipes: Sushi Rice, Teriyaki Chicken, Miso Soup, Beef Ramen, Tempura
+   - Recipes: Pad Thai, Green Curry, Tom Yum, Mango Sticky Rice, Som Tam
 
 ### Recipe Features
 

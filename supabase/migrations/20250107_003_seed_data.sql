@@ -2,25 +2,25 @@
 INSERT INTO mamas (id, name, cuisine_type, description, personality_traits, signature_dish, avatar_url, voice_id, accent_description, color_primary, color_secondary) VALUES
 (
   '550e8400-e29b-41d4-a716-446655440001',
-  'Nonna Isabella',
+  'Nonna Lucia',
   'italian',
   'A warm-hearted Italian grandmother from Tuscany who has been cooking for her family for over 50 years. She believes that food is love made visible and that every meal should bring people together.',
   ARRAY['warm', 'patient', 'storytelling', 'traditional', 'nurturing'],
   'Homemade Ragu Bolognese',
-  '/images/mamas/nonna-isabella.jpg',
-  'isabella_voice_id',
+  '/images/mamas/nonna-lucia.jpg',
+  'lucia_voice_id',
   'Gentle Italian accent with melodic intonation',
   '#8B4513',
   '#D2B48C'
 ),
 (
   '550e8400-e29b-41d4-a716-446655440002',
-  'Mama Rosa',
+  'Abuela Rosa',
   'mexican',
   'A vibrant Mexican cook from Oaxaca who learned traditional recipes from her grandmother. She is passionate about preserving authentic flavors and teaching the cultural significance behind each dish.',
   ARRAY['energetic', 'passionate', 'cultural', 'spicy', 'festive'],
   'Mole Negro Oaxaqueño',
-  '/images/mamas/mama-rosa.jpg',
+  '/images/mamas/abuela-rosa.jpg',
   'rosa_voice_id',
   'Warm Mexican accent with rhythmic speech patterns',
   '#C41E3A',
@@ -28,19 +28,19 @@ INSERT INTO mamas (id, name, cuisine_type, description, personality_traits, sign
 ),
 (
   '550e8400-e29b-41d4-a716-446655440003',
-  'Chef Kenji',
-  'japanese',
-  'A master of Japanese cuisine who trained in Tokyo for 15 years. He combines traditional techniques with modern presentation, emphasizing the importance of seasonal ingredients and mindful preparation.',
-  ARRAY['precise', 'mindful', 'seasonal', 'minimalist', 'respectful'],
-  'Seasonal Kaiseki Menu',
-  '/images/mamas/chef-kenji.jpg',
-  'kenji_voice_id',
-  'Calm Japanese accent with deliberate pacing',
+  'Mae Malai',
+  'thai',
+  'A master of Thai cuisine who learned traditional techniques from her grandmother in Bangkok. She combines authentic flavors with mindful preparation, emphasizing the importance of fresh ingredients and balanced spices.',
+  ARRAY['precise', 'mindful', 'seasonal', 'gentle', 'respectful'],
+  'Green Curry with Fresh Herbs',
+  '/images/mamas/mae-malai.jpg',
+  'malai_voice_id',
+  'Calm Thai accent with deliberate pacing',
   '#2E8B57',
   '#90EE90'
 );
 
--- Insert recipes for Nonna Isabella (Italian)
+-- Insert recipes for Nonna Lucia (Italian)
 INSERT INTO recipes (id, mama_id, title, description, prep_time, cook_time, difficulty, servings, hero_image_url, ingredients, steps, cultural_notes, offline_available) VALUES
 (
   '660e8400-e29b-41d4-a716-446655440001',
@@ -194,7 +194,7 @@ INSERT INTO recipes (id, mama_id, title, description, prep_time, cook_time, diff
   false
 );
 
--- Insert recipes for Mama Rosa (Mexican)  
+-- Insert recipes for Abuela Rosa (Mexican)  
 INSERT INTO recipes (id, mama_id, title, description, prep_time, cook_time, difficulty, servings, hero_image_url, ingredients, steps, cultural_notes, offline_available) VALUES
 (
   '660e8400-e29b-41d4-a716-446655440003',
@@ -350,152 +350,159 @@ INSERT INTO recipes (id, mama_id, title, description, prep_time, cook_time, diff
   true
 );
 
--- Insert recipes for Chef Kenji (Japanese)
+-- Insert recipes for Mae Malai (Thai)
 INSERT INTO recipes (id, mama_id, title, description, prep_time, cook_time, difficulty, servings, hero_image_url, ingredients, steps, cultural_notes, offline_available) VALUES
 (
   '660e8400-e29b-41d4-a716-446655440004',
   '550e8400-e29b-41d4-a716-446655440003',
-  'Perfect Sushi Rice',
-  'The foundation of great sushi - properly seasoned rice with the perfect texture and temperature.',
-  10,
-  25,
+  'Authentic Pad Thai',
+  'Classic Thai stir-fried noodles with tamarind, fish sauce, and fresh ingredients - the perfect balance of sweet, sour, and savory.',
+  20,
+  15,
   'medium',
   4,
-  '/images/recipes/sushi-rice.jpg',
+  '/images/recipes/pad-thai.jpg',
   '[
-    {"name": "Sushi rice", "amount": 300, "unit": "g", "notes": "Short grain"},
-    {"name": "Water", "amount": 360, "unit": "ml", "notes": "Filtered"},
-    {"name": "Rice vinegar", "amount": 60, "unit": "ml", "notes": ""},
-    {"name": "Sugar", "amount": 2, "unit": "tbsp", "notes": ""},
-    {"name": "Salt", "amount": 1, "unit": "tsp", "notes": "Sea salt"}
+    {"name": "Rice noodles", "amount": 400, "unit": "g", "notes": "Soaked until soft"},
+    {"name": "Shrimp", "amount": 200, "unit": "g", "notes": "Peeled and deveined"},
+    {"name": "Tamarind paste", "amount": 3, "unit": "tbsp", "notes": "Authentic flavor"},
+    {"name": "Fish sauce", "amount": 2, "unit": "tbsp", "notes": "High quality"},
+    {"name": "Palm sugar", "amount": 2, "unit": "tbsp", "notes": "Or brown sugar"},
+    {"name": "Bean sprouts", "amount": 200, "unit": "g", "notes": "Fresh"},
+    {"name": "Eggs", "amount": 2, "unit": "large", "notes": ""},
+    {"name": "Peanuts", "amount": 50, "unit": "g", "notes": "Crushed"}
   ]',
   '[
-    {"step": 1, "description": "Rinse rice until water runs clear, let drain for 30 minutes.", "duration": 35},
-    {"step": 2, "description": "Cook rice with water in rice cooker or pot.", "duration": 20},
-    {"step": 3, "description": "Mix vinegar, sugar, and salt until dissolved.", "duration": 2},
-    {"step": 4, "description": "Transfer hot rice to wooden bowl, add vinegar mixture.", "duration": 3},
-    {"step": 5, "description": "Mix gently with cutting motion, fan to cool to body temperature.", "duration": 10}
+    {"step": 1, "description": "Soak rice noodles in warm water until soft.", "duration": 10},
+    {"step": 2, "description": "Heat oil in wok over high heat.", "duration": 2},
+    {"step": 3, "description": "Add shrimp and cook until pink.", "duration": 3},
+    {"step": 4, "description": "Push to one side, scramble eggs.", "duration": 2},
+    {"step": 5, "description": "Add noodles and sauce mixture.", "duration": 5},
+    {"step": 6, "description": "Toss with bean sprouts and peanuts.", "duration": 3}
   ]',
-  'Sushi rice should be at body temperature when served. The vinegar mixture is called sushi-zu.',
+  'Pad Thai is Thailand''s national dish, balancing sweet, sour, and salty flavors perfectly.',
   true
 ),
 (
   '660e8400-e29b-41d4-a716-446655440011',
   '550e8400-e29b-41d4-a716-446655440003',
-  'Chicken Teriyaki',
-  'Glazed chicken thighs with a sweet and savory teriyaki sauce.',
-  15,
+  'Green Curry with Coconut',
+  'Aromatic Thai curry with fresh green chilies, coconut milk, and fragrant herbs.',
   25,
-  'easy',
+  30,
+  'medium',
   4,
-  '/images/recipes/chicken-teriyaki.jpg',
+  '/images/recipes/green-curry.jpg',
   '[
-    {"name": "Chicken thighs", "amount": 8, "unit": "pieces", "notes": "Bone-in, skin-on"},
-    {"name": "Soy sauce", "amount": 60, "unit": "ml", "notes": ""},
-    {"name": "Mirin", "amount": 60, "unit": "ml", "notes": ""},
-    {"name": "Sake", "amount": 30, "unit": "ml", "notes": ""},
-    {"name": "Sugar", "amount": 2, "unit": "tbsp", "notes": ""},
-    {"name": "Ginger", "amount": 1, "unit": "piece", "notes": "2cm, grated"},
-    {"name": "Vegetable oil", "amount": 1, "unit": "tbsp", "notes": ""}
+    {"name": "Green curry paste", "amount": 3, "unit": "tbsp", "notes": "Fresh or store-bought"},
+    {"name": "Coconut milk", "amount": 400, "unit": "ml", "notes": "Full-fat"},
+    {"name": "Chicken thigh", "amount": 500, "unit": "g", "notes": "Cut into pieces"},
+    {"name": "Thai eggplant", "amount": 200, "unit": "g", "notes": "Quartered"},
+    {"name": "Thai basil", "amount": 1, "unit": "bunch", "notes": "Fresh leaves"},
+    {"name": "Fish sauce", "amount": 2, "unit": "tbsp", "notes": ""},
+    {"name": "Palm sugar", "amount": 1, "unit": "tbsp", "notes": ""},
+    {"name": "Thai chilies", "amount": 2, "unit": "pieces", "notes": "Sliced"}
   ]',
   '[
-    {"step": 1, "description": "Mix soy sauce, mirin, sake, sugar, and ginger for sauce.", "duration": 3},
-    {"step": 2, "description": "Heat oil in large skillet over medium-high heat.", "duration": 2},
-    {"step": 3, "description": "Cook chicken skin-side down for 7 minutes until golden.", "duration": 7},
-    {"step": 4, "description": "Flip chicken, cook 5 minutes more.", "duration": 5},
-    {"step": 5, "description": "Add teriyaki sauce, simmer until glazed.", "duration": 8},
-    {"step": 6, "description": "Serve over rice with steamed vegetables.", "duration": 2}
+    {"step": 1, "description": "Heat thick coconut milk, fry curry paste until fragrant.", "duration": 5},
+    {"step": 2, "description": "Add chicken, cook until just done.", "duration": 8},
+    {"step": 3, "description": "Add remaining coconut milk and eggplant.", "duration": 5},
+    {"step": 4, "description": "Season with fish sauce and palm sugar.", "duration": 2},
+    {"step": 5, "description": "Simmer until vegetables are tender.", "duration": 10},
+    {"step": 6, "description": "Garnish with basil and chilies.", "duration": 2}
   ]',
-  'Teriyaki means grilled and glazed. The sauce should coat the chicken with a glossy finish.',
+  'Green curry is one of the most popular Thai dishes. The key is balancing the heat with sweetness.',
   true
 ),
 (
   '660e8400-e29b-41d4-a716-446655440012',
   '550e8400-e29b-41d4-a716-446655440003',
-  'Miso Soup',
-  'Traditional Japanese soup with tofu, wakame, and green onions.',
-  10,
-  10,
+  'Tom Yum Goong',
+  'Famous Thai hot and sour soup with shrimp, lemongrass, and lime leaves.',
+  15,
+  20,
   'easy',
   4,
-  '/images/recipes/miso-soup.jpg',
+  '/images/recipes/tom-yum.jpg',
   '[
-    {"name": "Dashi stock", "amount": 800, "unit": "ml", "notes": "Instant or homemade"},
-    {"name": "Miso paste", "amount": 3, "unit": "tbsp", "notes": "White or red"},
-    {"name": "Silken tofu", "amount": 200, "unit": "g", "notes": "Cubed"},
-    {"name": "Wakame seaweed", "amount": 2, "unit": "tbsp", "notes": "Dried"},
-    {"name": "Green onions", "amount": 2, "unit": "stalks", "notes": "Chopped"}
+    {"name": "Shrimp", "amount": 300, "unit": "g", "notes": "Large, peeled"},
+    {"name": "Lemongrass", "amount": 2, "unit": "stalks", "notes": "Bruised"},
+    {"name": "Galangal", "amount": 3, "unit": "slices", "notes": "Fresh"},
+    {"name": "Lime leaves", "amount": 4, "unit": "pieces", "notes": "Torn"},
+    {"name": "Thai chilies", "amount": 3, "unit": "pieces", "notes": "Crushed"},
+    {"name": "Mushrooms", "amount": 100, "unit": "g", "notes": "Sliced"},
+    {"name": "Lime juice", "amount": 3, "unit": "tbsp", "notes": "Fresh"},
+    {"name": "Fish sauce", "amount": 2, "unit": "tbsp", "notes": ""}
   ]',
   '[
-    {"step": 1, "description": "Soak wakame in water for 5 minutes until rehydrated.", "duration": 5},
-    {"step": 2, "description": "Heat dashi stock in saucepan over medium heat.", "duration": 3},
-    {"step": 3, "description": "Whisk miso paste with small amount of hot dashi.", "duration": 2},
-    {"step": 4, "description": "Add miso mixture back to pot, do not boil.", "duration": 2},
-    {"step": 5, "description": "Add tofu and wakame, heat through gently.", "duration": 3},
-    {"step": 6, "description": "Serve immediately garnished with green onions.", "duration": 1}
+    {"step": 1, "description": "Bring water to boil with lemongrass, galangal, and lime leaves.", "duration": 8},
+    {"step": 2, "description": "Add mushrooms and chilies, simmer 3 minutes.", "duration": 3},
+    {"step": 3, "description": "Add shrimp, cook until pink.", "duration": 3},
+    {"step": 4, "description": "Remove from heat, add lime juice and fish sauce.", "duration": 2},
+    {"step": 5, "description": "Taste and adjust seasoning.", "duration": 2},
+    {"step": 6, "description": "Serve immediately while hot.", "duration": 1}
   ]',
-  'Miso soup is served with almost every Japanese meal. Never boil after adding miso.',
+  'Tom Yum is the soul of Thai cuisine - hot, sour, and incredibly aromatic.',
   true
 ),
 (
   '660e8400-e29b-41d4-a716-446655440013',
   '550e8400-e29b-41d4-a716-446655440003',
-  'Beef Ramen',
-  'Rich, flavorful ramen with tender beef and perfectly cooked noodles.',
+  'Thai Mango Sticky Rice',
+  'Traditional Thai dessert with sweet coconut sticky rice and fresh mango.',
   30,
   45,
-  'medium',
-  4,
-  '/images/recipes/beef-ramen.jpg',
+  'easy',
+  6,
+  '/images/recipes/mango-sticky-rice.jpg',
   '[
-    {"name": "Beef chuck", "amount": 500, "unit": "g", "notes": "Cut in strips"},
-    {"name": "Ramen noodles", "amount": 4, "unit": "portions", "notes": "Fresh or dried"},
-    {"name": "Beef stock", "amount": 1, "unit": "L", "notes": "Rich"},
-    {"name": "Soy sauce", "amount": 4, "unit": "tbsp", "notes": ""},
-    {"name": "Miso paste", "amount": 2, "unit": "tbsp", "notes": "Red"},
-    {"name": "Eggs", "amount": 4, "unit": "large", "notes": "For soft-boiled"},
-    {"name": "Green onions", "amount": 4, "unit": "stalks", "notes": "Chopped"},
-    {"name": "Nori sheets", "amount": 2, "unit": "pieces", "notes": "Cut in strips"}
+    {"name": "Glutinous rice", "amount": 300, "unit": "g", "notes": "Soaked overnight"},
+    {"name": "Coconut milk", "amount": 400, "unit": "ml", "notes": "Thick"},
+    {"name": "Sugar", "amount": 100, "unit": "g", "notes": "Palm or white"},
+    {"name": "Salt", "amount": 1, "unit": "tsp", "notes": "Pinch"},
+    {"name": "Ripe mangoes", "amount": 2, "unit": "large", "notes": "Sliced"},
+    {"name": "Toasted sesame seeds", "amount": 1, "unit": "tbsp", "notes": "For garnish"}
   ]',
   '[
-    {"step": 1, "description": "Marinate beef in soy sauce for 20 minutes.", "duration": 20},
-    {"step": 2, "description": "Soft-boil eggs for 6 minutes, cool in ice water.", "duration": 10},
-    {"step": 3, "description": "Heat stock, whisk in miso paste until smooth.", "duration": 5},
-    {"step": 4, "description": "Cook marinated beef until just done.", "duration": 8},
-    {"step": 5, "description": "Cook ramen noodles according to package directions.", "duration": 3},
-    {"step": 6, "description": "Assemble bowls with noodles, beef, eggs, and garnishes.", "duration": 5}
+    {"step": 1, "description": "Steam soaked rice for 25 minutes until tender.", "duration": 25},
+    {"step": 2, "description": "Heat coconut milk with sugar and salt until dissolved.", "duration": 5},
+    {"step": 3, "description": "Mix hot rice with half the coconut mixture.", "duration": 5},
+    {"step": 4, "description": "Let rice absorb coconut milk for 10 minutes.", "duration": 10},
+    {"step": 5, "description": "Serve with sliced mango and remaining coconut sauce.", "duration": 3},
+    {"step": 6, "description": "Garnish with sesame seeds.", "duration": 1}
   ]',
-  'Ramen is an art form in Japan. The broth should be rich and the noodles have perfect texture.',
+  'This beloved Thai dessert is perfect for hot weather and represents the harmony of flavors.',
   false
 ),
 (
   '660e8400-e29b-41d4-a716-446655440015',
   '550e8400-e29b-41d4-a716-446655440003',
-  'Tempura Vegetables',
-  'Light, crispy battered vegetables fried to golden perfection.',
+  'Som Tam (Papaya Salad)',
+  'Fresh and spicy Thai salad with green papaya, tomatoes, and lime dressing.',
   20,
-  15,
-  'medium',
+  0,
+  'easy',
   4,
-  '/images/recipes/tempura.jpg',
+  '/images/recipes/som-tam.jpg',
   '[
-    {"name": "Mixed vegetables", "amount": 500, "unit": "g", "notes": "Sweet potato, eggplant, bell pepper"},
-    {"name": "Tempura flour", "amount": 200, "unit": "g", "notes": "Or all-purpose flour"},
-    {"name": "Ice water", "amount": 300, "unit": "ml", "notes": "Very cold"},
-    {"name": "Egg yolk", "amount": 1, "unit": "large", "notes": ""},
-    {"name": "Vegetable oil", "amount": 4, "unit": "cups", "notes": "For deep frying"},
-    {"name": "Dashi", "amount": 200, "unit": "ml", "notes": "For dipping sauce"},
-    {"name": "Soy sauce", "amount": 2, "unit": "tbsp", "notes": ""},
-    {"name": "Mirin", "amount": 1, "unit": "tbsp", "notes": ""}
+    {"name": "Green papaya", "amount": 1, "unit": "medium", "notes": "Julienned"},
+    {"name": "Cherry tomatoes", "amount": 100, "unit": "g", "notes": "Halved"},
+    {"name": "Green beans", "amount": 50, "unit": "g", "notes": "Cut into pieces"},
+    {"name": "Thai chilies", "amount": 3, "unit": "pieces", "notes": "To taste"},
+    {"name": "Garlic", "amount": 2, "unit": "cloves", "notes": ""},
+    {"name": "Lime juice", "amount": 3, "unit": "tbsp", "notes": "Fresh"},
+    {"name": "Fish sauce", "amount": 2, "unit": "tbsp", "notes": ""},
+    {"name": "Palm sugar", "amount": 1, "unit": "tbsp", "notes": ""},
+    {"name": "Peanuts", "amount": 30, "unit": "g", "notes": "Roasted"}
   ]',
   '[
-    {"step": 1, "description": "Cut vegetables into bite-sized pieces.", "duration": 10},
-    {"step": 2, "description": "Heat oil to 170°C in deep pot.", "duration": 5},
-    {"step": 3, "description": "Mix egg yolk with ice water, add flour, stir minimally.", "duration": 3},
-    {"step": 4, "description": "Dip vegetables in batter, fry until golden.", "duration": 12},
-    {"step": 5, "description": "Drain on paper towels, serve immediately.", "duration": 2},
-    {"step": 6, "description": "Serve with dipping sauce made from dashi, soy sauce, and mirin.", "duration": 2}
+    {"step": 1, "description": "Pound chilies and garlic in mortar and pestle.", "duration": 3},
+    {"step": 2, "description": "Add green beans and tomatoes, pound lightly.", "duration": 2},
+    {"step": 3, "description": "Add papaya and pound gently to bruise.", "duration": 3},
+    {"step": 4, "description": "Mix in lime juice, fish sauce, and palm sugar.", "duration": 2},
+    {"step": 5, "description": "Add peanuts and toss everything together.", "duration": 2},
+    {"step": 6, "description": "Taste and adjust seasoning, serve immediately.", "duration": 2}
   ]',
-  'The secret to light tempura is ice-cold water and minimal mixing. Lumps in the batter are perfectly fine.',
-  false
+  'Som Tam is a refreshing salad that perfectly balances sweet, sour, salty, and spicy flavors.',
+  true
 ); 

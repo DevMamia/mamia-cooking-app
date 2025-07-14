@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { db } from "@/lib/database/supabase-service";
 import { Button } from "@/components/ui";
 import { useRouter } from "next/navigation";
@@ -172,10 +173,12 @@ export default function RecipesPage() {
             {/* Recipe Image */}
             <div className="h-48 bg-gray-200 relative">
               {recipe.hero_image_url ? (
-                <img
+                <Image
                   src={recipe.hero_image_url}
                   alt={recipe.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-400">

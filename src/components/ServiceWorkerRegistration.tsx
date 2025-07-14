@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface ServiceWorkerState {
   isSupported: boolean;
@@ -21,20 +21,7 @@ export default function ServiceWorkerRegistration() {
     error: null,
   });
 
-  useEffect(() => {
-    // Check if service workers are supported
-    if ('serviceWorker' in navigator) {
-      setSwState(prev => ({ ...prev, isSupported: true }));
-      registerServiceWorker();
-    } else {
-      setSwState(prev => ({ 
-        ...prev, 
-        error: 'Service workers are not supported in this browser' 
-      }));
-    }
-  }, []);
-
-  const registerServiceWorker = async () => {
+  const registerServiceWorker = useCallback(async () => {
     try {
       setSwState(prev => ({ ...prev, isInstalling: true }));
 
@@ -88,7 +75,20 @@ export default function ServiceWorkerRegistration() {
         isInstalling: false 
       }));
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Check if service workers are supported
+    if ('serviceWorker' in navigator) {
+      setSwState(prev => ({ ...prev, isSupported: true }));
+      registerServiceWorker();
+    } else {
+      setSwState(prev => ({ 
+        ...prev, 
+        error: 'Service workers are not supported in this browser' 
+      }));
+    }
+  }, [registerServiceWorker]);
 
   const trackInstalling = (worker: ServiceWorker) => {
     worker.addEventListener('statechange', () => {

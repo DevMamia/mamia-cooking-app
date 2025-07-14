@@ -87,7 +87,7 @@ class PostHogMock {
     const sessionId = this.getCurrentSessionId();
     
     const eventData: PostHogEvent = {
-      event,
+      event: typeof event === 'string' ? event : '',
       properties: {
         ...properties,
         $current_url: window.location.href,
@@ -95,12 +95,12 @@ class PostHogMock {
         $viewport_height: window.innerHeight,
         $viewport_width: window.innerWidth,
         $timestamp: new Date().toISOString(),
-        distinctId,
-        sessionId
+        distinctId: typeof distinctId === 'string' ? distinctId : '',
+        sessionId: typeof sessionId === 'string' ? sessionId : ''
       },
       timestamp: new Date(),
-      distinctId,
-      sessionId
+      distinctId: typeof distinctId === 'string' ? distinctId : '',
+      sessionId: typeof sessionId === 'string' ? sessionId : ''
     };
 
     this.events.push(eventData);
@@ -195,17 +195,17 @@ class PostHogMock {
       event => event.timestamp >= startDate && event.timestamp <= endDate
     );
 
-    const uniqueUsers = new Set(filteredEvents.map(e => e.distinctId)).size;
+    const uniqueUsers = new Set(filteredEvents.map(e => e.distinctId || '')).size;
     const eventCounts = new Map<string, number>();
     
     filteredEvents.forEach(event => {
-      eventCounts.set(event.event, (eventCounts.get(event.event) || 0) + 1);
+      eventCounts.set(event.event || '', (eventCounts.get(event.event || '') || 0) + 1);
     });
 
     const topEvents = Array.from(eventCounts.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10)
-      .map(([event, count]) => ({ event, count }));
+      .map(([event, count]) => ({ event: event || '', count }));
 
     return {
       totalEvents: filteredEvents.length,

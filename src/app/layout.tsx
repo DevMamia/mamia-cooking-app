@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
+import { BrandLogo } from '@/components/ui/brand-logo';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -72,8 +73,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50">
           {/* Accessible site-wide header */}
-          <header className="mobile-container py-3 flex items-center justify-center border-b border-gray-200">
-            <h1 className="text-lg font-bold" style={{ color: 'var(--terracotta)' }}>MAMIA</h1>
+          <header className="mobile-container py-3 flex items-center justify-center border-b border-gray-200 bg-white bg-opacity-80">
+            <div className="flex items-center space-x-3">
+              <BrandLogo size="medium" />
+              <h1 className="text-2xl font-bold tracking-wide" style={{ color: '#8B4513' }}>MAMIA</h1>
+            </div>
           </header>
           <main className="pb-20">
             {children}

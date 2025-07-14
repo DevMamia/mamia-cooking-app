@@ -49,7 +49,7 @@ const SAMPLE_RECIPES = [
   }
 ];
 
-const VOICE_IDS = ['nonna-lucia', 'abuela-rosa', 'mae-malai'];
+const VOICE_IDS = ['lucia_voice_id', 'rosa_voice_id', 'malai_voice_id'];
 
 const COMMON_PHRASES = [
   // Cooking instructions
@@ -142,15 +142,15 @@ class VoicePreGenerator {
   mockGenerateVariations(baseText, voiceId, category) {
     // Mock salt and pepper phrases
     const saltPhrases = {
-      'nonna-lucia': ['Bene, mio caro,', 'Ascolta, bambino,', 'Come, tesoro,'],
-      'abuela-rosa': ['Muy bien, mi nieto,', 'Escucha, querido,', 'Ven acá, corazón,'],
-      'mae-malai': ['Dee mak, little one,', 'Listen carefully, sweetie,', 'Come here, darling,']
+      'lucia_voice_id': ['Bene, mio caro,', 'Ascolta, bambino,', 'Come, tesoro,'],
+      'rosa_voice_id': ['Muy bien, mi nieto,', 'Escucha, querido,', 'Ven acá, corazón,'],
+      'malai_voice_id': ['Dee mak, little one,', 'Listen carefully, sweetie,', 'Come here, darling,']
     };
 
     const pepperPhrases = {
-      'nonna-lucia': [', just like my nonna taught me', ', with amore and patience', ', the way we\'ve done it for generations'],
-      'abuela-rosa': [', just like we do in Valencia', ', con cariño and wisdom', ', the traditional way, paso a paso'],
-      'mae-malai': [', the way my grandmother showed me', ', with mindfulness and respect', ', following ancient Thai wisdom']
+      'lucia_voice_id': [', just like my nonna taught me', ', with amore and patience', ', the way we\'ve done it for generations'],
+      'rosa_voice_id': [', just like we do in Valencia', ', con cariño and wisdom', ', the traditional way, paso a paso'],
+      'malai_voice_id': [', the way my grandmother showed me', ', with mindfulness and respect', ', following ancient Thai wisdom']
     };
 
     const variations = [baseText]; // Always include base text
