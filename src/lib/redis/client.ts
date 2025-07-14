@@ -1,17 +1,24 @@
 import { Redis } from '@upstash/redis';
 import type { CacheEntry } from '@/types';
 
-export const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_URL!,
-  token: process.env.UPSTASH_REDIS_TOKEN!,
-});
+const REDIS_URL = process.env.UPSTASH_REDIS_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_TOKEN;
+
+if (!REDIS_URL || !REDIS_TOKEN) {
+  console.warn('Redis credentials not found. Cache operations will be disabled.');
+}
+
+const redis = REDIS_URL && REDIS_TOKEN ? new Redis({
+  url: REDIS_URL,
+  token: REDIS_TOKEN,
+}) : null;
 
 export class CacheManager {
   private static instance: CacheManager;
   private redis: Redis;
 
   private constructor() {
-    this.redis = redis;
+    this.redis = redis!;
   }
 
   public static getInstance(): CacheManager {
@@ -22,6 +29,8 @@ export class CacheManager {
   }
 
   async get<T>(key: string): Promise<T | null> {
+    if (!this.redis) return null;
+    
     try {
       const cached = await this.redis.get<CacheEntry<T>>(key);
       if (!cached) return null;
@@ -40,6 +49,8 @@ export class CacheManager {
   }
 
   async set<T>(key: string, data: T, ttl: number = 3600000): Promise<void> {
+    if (!this.redis) return;
+    
     try {
       const cacheEntry: CacheEntry<T> = {
         data,
@@ -53,6 +64,8 @@ export class CacheManager {
   }
 
   async del(key: string): Promise<void> {
+    if (!this.redis) return;
+    
     try {
       await this.redis.del(key);
     } catch (error) {
@@ -61,6 +74,8 @@ export class CacheManager {
   }
 
   async flush(): Promise<void> {
+    if (!this.redis) return;
+    
     try {
       await this.redis.flushall();
     } catch (error) {

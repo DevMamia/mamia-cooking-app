@@ -36,9 +36,9 @@ const nextConfig: NextConfig = {
     ];
   },
   
-  // Disable TypeScript checking during build
+  // TypeScript configuration
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
 
   // Enable offline support

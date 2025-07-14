@@ -106,7 +106,7 @@ export function MamaCarousel() {
   return (
     <div className="relative w-full py-8">
       {/* Header */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 px-4">
         <h2 className="text-3xl font-bold mb-2" style={{ color: '#8B4513' }}>
           Choose Your Cooking Guide
         </h2>
@@ -118,8 +118,8 @@ export function MamaCarousel() {
       {/* Carousel */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {mamasData.map((mama, index) => (
-            <div key={mama.id} className="flex-[0_0_100%] min-w-0 px-4">
+          {mamasData.map((mama) => (
+            <div key={mama.id} className="flex-[0_0_100%] min-w-0">
               <MamaCard mama={mama} />
             </div>
           ))}

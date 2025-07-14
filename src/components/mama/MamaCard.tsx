@@ -65,7 +65,7 @@ const characterData: Record<string, MamaData> = {
   }
 };
 
-export function MamaCard({ mama }: MamaCardProps) {
+export const MamaCard = React.memo(function MamaCard({ mama }: MamaCardProps) {
   const router = useRouter();
   
   // Use the enhanced character data
@@ -76,20 +76,20 @@ export function MamaCard({ mama }: MamaCardProps) {
   };
 
   return (
-    <div
-      className="relative rounded-3xl p-8 flex flex-col cursor-pointer transform transition-transform hover:scale-105"
-      style={{
-        backgroundColor: enhancedMama.backgroundColor,
-        height: '600px',
-        width: '100%',
-        maxWidth: '350px',
-        margin: '0 auto',
-        flexShrink: 0,
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1)',
-        background: `linear-gradient(135deg, ${enhancedMama.backgroundColor} 0%, ${enhancedMama.secondaryColor}20 100%)`
-      }}
-      onClick={handleOpenCookbook}
-    >
+    <div className="w-full flex justify-center px-4">
+      <div
+        className="relative rounded-3xl p-8 flex flex-col cursor-pointer transform transition-transform hover:scale-105"
+        style={{
+          backgroundColor: enhancedMama.backgroundColor,
+          height: '600px',
+          width: '100%',
+          maxWidth: '350px',
+          flexShrink: 0,
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1)',
+          background: `linear-gradient(135deg, ${enhancedMama.backgroundColor} 0%, ${enhancedMama.secondaryColor}20 100%)`
+        }}
+        onClick={handleOpenCookbook}
+      >
       {/* Character Name Header */}
       <div className="text-center mb-6">
         <h2 
@@ -209,6 +209,7 @@ export function MamaCard({ mama }: MamaCardProps) {
           Open {enhancedMama.name}&rsquo;s Cookbook
         </Button>
       </div>
+      </div>
     </div>
   );
-} 
+}); 

@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { BottomNav } from "@/components/navigation/BottomNav";
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration';
 import { BrandLogo } from '@/components/ui/brand-logo';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -71,16 +72,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50">
+        <div className="min-h-screen bg-gradient-to-br from-orange-50 to-pink-50 relative">
           {/* Accessible site-wide header */}
-          <header className="mobile-container py-3 flex items-center justify-center border-b border-gray-200 bg-white bg-opacity-80">
+          <header className="relative z-10 py-3 flex items-center justify-center border-b border-gray-200 bg-white bg-opacity-90 backdrop-blur-sm w-full">
             <div className="flex items-center space-x-3">
               <BrandLogo size="medium" />
               <h1 className="text-2xl font-bold tracking-wide" style={{ color: '#8B4513' }}>MAMIA</h1>
             </div>
           </header>
-          <main className="pb-20">
-            {children}
+          <main className="pb-20 min-h-[calc(100vh-4rem)]">
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </main>
           <BottomNav />
           <ServiceWorkerRegistration />

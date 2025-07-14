@@ -1,22 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import TTSService from '@/lib/voice/tts-service';
 import { VoiceServiceError } from '@/lib/voice/elevenlabs-mock';
+import { voiceGenerateSchema, userIdSchema } from '@/lib/validation/api-schemas';
+import { validateBody, sanitizeInput } from '@/lib/validation/validate';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { text, voiceId, variationType, speed, stability } = body;
-
-    // Validate required fields
-    if (!text || !voiceId) {
-      return NextResponse.json(
-        { error: 'Missing required fields: text, voiceId' },
-        { status: 400 }
-      );
+    // Validate request body
+    const validation = await validateBody(request, voiceGenerateSchema);
+    if (!validation.success) {
+      return validation.error;
     }
 
-    // Get user ID from headers or use anonymous
-    const userId = request.headers.get('x-user-id') || 'anonymous';
+    // Sanitize input data
+    const sanitizedData = sanitizeInput(validation.data);
+    const { text, voiceId, variationType, speed, stability } = sanitizedData;
+
+    // Validate and get user ID from headers
+    const userIdHeader = request.headers.get('x-user-id');
+    const userId = userIdSchema.parse(userIdHeader);
 
     const ttsService = TTSService.getInstance();
     
@@ -24,9 +26,9 @@ export async function POST(request: NextRequest) {
       {
         text,
         voiceId,
-        variationType,
-        speed,
-        stability
+        ...(variationType && { variationType }),
+        ...(speed !== undefined && { speed }),
+        ...(stability !== undefined && { stability })
       },
       userId
     );
@@ -62,6 +64,15 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get('action');
 
+    // Validate action parameter
+    const validActions = ['voices', 'stats', 'health', 'usage'];
+    if (!action || !validActions.includes(action)) {
+      return NextResponse.json(
+        { error: 'Invalid action. Use: voices, stats, health, or usage' },
+        { status: 400 }
+      );
+    }
+
     const ttsService = TTSService.getInstance();
 
     switch (action) {
@@ -78,13 +89,14 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(health);
 
       case 'usage':
-        const userId = request.headers.get('x-user-id') || 'anonymous';
+        const userIdHeader = request.headers.get('x-user-id');
+        const userId = userIdSchema.parse(userIdHeader);
         const usage = await ttsService.getUserUsage(userId);
         return NextResponse.json(usage);
 
       default:
         return NextResponse.json(
-          { error: 'Invalid action. Use: voices, stats, health, or usage' },
+          { error: 'Invalid action' },
           { status: 400 }
         );
     }
@@ -101,6 +113,14 @@ export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const voiceId = searchParams.get('voiceId');
+
+    // Validate voiceId if provided
+    if (voiceId && !/^[a-zA-Z0-9-]+$/.test(voiceId)) {
+      return NextResponse.json(
+        { error: 'Invalid voice ID format' },
+        { status: 400 }
+      );
+    }
 
     const ttsService = TTSService.getInstance();
     await ttsService.clearCache(voiceId || undefined);

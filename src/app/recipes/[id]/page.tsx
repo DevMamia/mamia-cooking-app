@@ -5,7 +5,9 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { db } from "@/lib/database/supabase-service";
 import { Button } from "@/components/ui";
-import { ArrowLeft, Clock, Users, ChefHat, Heart } from "lucide-react";
+import { ArrowLeft, Clock, Users, ChefHat, Heart, ShoppingCart, Check } from "lucide-react";
+import { useShoppingListStore } from "@/lib/store/shopping-list-store";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Recipe {
   id: string;
@@ -44,6 +46,9 @@ export default function RecipeDetailPage() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [selectedIngredients, setSelectedIngredients] = useState<Set<number>>(new Set());
+  const [showAddedNotification, setShowAddedNotification] = useState(false);
+  const { addItems } = useShoppingListStore();
 
   useEffect(() => {
     const loadRecipe = async () => {
@@ -94,6 +99,66 @@ export default function RecipeDetailPage() {
     // TODO: Implement actual favorite functionality with authentication
   };
 
+  const toggleIngredient = (index: number) => {
+    const newSelected = new Set(selectedIngredients);
+    if (newSelected.has(index)) {
+      newSelected.delete(index);
+    } else {
+      newSelected.add(index);
+    }
+    setSelectedIngredients(newSelected);
+  };
+
+  const selectAllIngredients = () => {
+    if (selectedIngredients.size === recipe?.ingredients.length) {
+      setSelectedIngredients(new Set());
+    } else {
+      setSelectedIngredients(new Set(recipe?.ingredients.map((_, i) => i)));
+    }
+  };
+
+  const categorizeIngredient = (name: string): string => {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('meat') || lowerName.includes('chicken') || lowerName.includes('beef') || lowerName.includes('pork') || lowerName.includes('fish')) {
+      return 'meat';
+    } else if (lowerName.includes('milk') || lowerName.includes('cheese') || lowerName.includes('yogurt') || lowerName.includes('butter')) {
+      return 'dairy';
+    } else if (lowerName.includes('bread') || lowerName.includes('flour')) {
+      return 'bakery';
+    } else if (lowerName.includes('vegetable') || lowerName.includes('tomato') || lowerName.includes('onion') || lowerName.includes('garlic')) {
+      return 'produce';
+    } else {
+      return 'pantry';
+    }
+  };
+
+  const handleAddToShoppingList = () => {
+    if (!recipe || selectedIngredients.size === 0) return;
+
+    const itemsToAdd = Array.from(selectedIngredients).map(index => {
+      const ingredient = recipe.ingredients[index];
+      if (!ingredient) return null;
+      return {
+        name: ingredient.name,
+        quantity: ingredient.amount,
+        category: categorizeIngredient(ingredient.name),
+        recipeId: recipe.id,
+        recipeName: recipe.title
+      };
+    }).filter(Boolean) as Array<{
+      name: string;
+      quantity: string;
+      category: string;
+      recipeId: string;
+      recipeName: string;
+    }>;
+
+    addItems(itemsToAdd);
+    setSelectedIngredients(new Set());
+    setShowAddedNotification(true);
+    setTimeout(() => setShowAddedNotification(false), 3000);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-96">
@@ -123,7 +188,22 @@ export default function RecipeDetailPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {/* Added to Cart Notification */}
+      <AnimatePresence>
+        {showAddedNotification && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center gap-2"
+          >
+            <Check size={20} />
+            <span>Added to shopping list!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Header with Back Button */}
       <div className="flex items-center justify-between">
         <Button
@@ -228,11 +308,49 @@ export default function RecipeDetailPage() {
 
       {/* Ingredients */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-xl font-semibold mb-4">Ingredients</h2>
-        <div className="space-y-3">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">Ingredients</h2>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={selectAllIngredients}
+              className="text-sm"
+            >
+              {selectedIngredients.size === recipe.ingredients.length ? 'Deselect All' : 'Select All'}
+            </Button>
+            <Button
+              onClick={handleAddToShoppingList}
+              disabled={selectedIngredients.size === 0}
+              className="bg-orange-600 hover:bg-orange-700 text-white text-sm flex items-center gap-2"
+            >
+              <ShoppingCart size={16} />
+              Add {selectedIngredients.size > 0 ? `(${selectedIngredients.size})` : ''} to List
+            </Button>
+          </div>
+        </div>
+        
+        <div className="space-y-2">
           {recipe.ingredients.map((ingredient, index) => (
-            <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-terracotta rounded-full mt-2 flex-shrink-0"></div>
+            <motion.div
+              key={index}
+              whileTap={{ scale: 0.98 }}
+              className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                selectedIngredients.has(index) ? 'bg-orange-50 border-orange-200' : 'bg-gray-50'
+              } border`}
+              onClick={() => toggleIngredient(index)}
+            >
+              <button
+                className={`flex-shrink-0 w-5 h-5 rounded border-2 mt-0.5 transition-colors ${
+                  selectedIngredients.has(index) 
+                    ? 'bg-orange-600 border-orange-600' 
+                    : 'border-gray-300 hover:border-orange-600'
+                }`}
+              >
+                {selectedIngredients.has(index) && (
+                  <Check size={16} className="text-white" />
+                )}
+              </button>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-medium">{ingredient.amount}</span>
@@ -244,7 +362,7 @@ export default function RecipeDetailPage() {
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

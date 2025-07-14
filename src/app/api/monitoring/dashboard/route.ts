@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { monitoringTimeRangeSchema, monitoringMetricSchema, monitoringActionSchema } from '@/lib/validation/api-schemas';
+import { validateBody, sanitizeInput } from '@/lib/validation/validate';
+import { withAdminAuth } from '@/lib/auth/middleware';
 
 // Mock services - we'll initialize them dynamically to avoid server-side issues
 let PostHogMock: any = null;
@@ -22,10 +25,16 @@ async function getServices() {
 }
 
 export async function GET(request: NextRequest) {
-  try {
+  return withAdminAuth(request, async () => {
+    try {
     const { searchParams } = new URL(request.url);
-    const timeRange = searchParams.get('timeRange') || '7d';
-    const metric = searchParams.get('metric');
+    
+    // Validate query parameters
+    const timeRangeParam = searchParams.get('timeRange');
+    const metricParam = searchParams.get('metric');
+    
+    const timeRange = monitoringTimeRangeSchema.parse(timeRangeParam);
+    const metric = metricParam ? monitoringMetricSchema.parse(metricParam) : undefined;
 
     // Calculate date range
     const now = new Date();
@@ -138,31 +147,45 @@ export async function GET(request: NextRequest) {
       }))
     };
 
-    return NextResponse.json(dashboardData);
-  } catch (error) {
-    console.error('Dashboard API error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch dashboard data' },
-      { status: 500 }
-    );
-  }
+      return NextResponse.json(dashboardData);
+    } catch (error) {
+      console.error('Dashboard API error:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch dashboard data' },
+        { status: 500 }
+      );
+    }
+  });
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { action, payload } = body;
+  return withAdminAuth(request, async () => {
+    try {
+    // Validate request body
+    const validation = await validateBody(request, monitoringActionSchema);
+    if (!validation.success) {
+      return validation.error;
+    }
+    
+    // Sanitize input
+    const sanitizedData = sanitizeInput(validation.data);
+    const { action, payload } = sanitizedData;
 
     const { posthog, sentry } = await getServices();
 
     switch (action) {
       case 'track_event':
-        posthog.capture(payload.event, payload.properties);
+        if (payload?.event) {
+          posthog.capture(payload.event, payload.properties);
+        }
         return NextResponse.json({ success: true });
 
       case 'report_error':
-        const errorId = sentry.captureException(payload.error, payload.options);
-        return NextResponse.json({ success: true, errorId });
+        if (payload?.error) {
+          const errorId = sentry.captureException(payload.error, payload.options);
+          return NextResponse.json({ success: true, errorId });
+        }
+        return NextResponse.json({ success: true });
 
       case 'start_transaction':
         // In a real implementation, this would return a transaction object
@@ -177,7 +200,9 @@ export async function POST(request: NextRequest) {
 
       case 'clear_cache':
         // Mock cache clearing
-        console.log('Cache cleared for:', payload.cacheType);
+        if (payload?.cacheType) {
+          console.log('Cache cleared for:', payload.cacheType);
+        }
         return NextResponse.json({ success: true });
 
       default:
@@ -185,14 +210,15 @@ export async function POST(request: NextRequest) {
           { error: 'Unknown action' },
           { status: 400 }
         );
+      }
+    } catch (error) {
+      console.error('Dashboard action error:', error);
+      return NextResponse.json(
+        { error: 'Failed to process action' },
+        { status: 500 }
+      );
     }
-  } catch (error) {
-    console.error('Dashboard action error:', error);
-    return NextResponse.json(
-      { error: 'Failed to process action' },
-      { status: 500 }
-    );
-  }
+  });
 }
 
 // Helper function to get specific metrics
