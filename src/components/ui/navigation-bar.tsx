@@ -1,8 +1,31 @@
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 import { Users, BookOpen, ChefHat, Home, User } from "lucide-react";
 
 export type NavigationTab = "mamas" | "recipes" | "cook" | "kitchen";
+
+const navigationItems = [
+  {
+    id: "mamas" as NavigationTab,
+    icon: <Users className="h-5 w-5" />,
+    label: "Mamas",
+  },
+  {
+    id: "recipes" as NavigationTab,
+    icon: <BookOpen className="h-5 w-5" />,
+    label: "Recipes",
+  },
+  {
+    id: "cook" as NavigationTab,
+    icon: <ChefHat className="h-5 w-5" />,
+    label: "Cook",
+  },
+  {
+    id: "kitchen" as NavigationTab,
+    icon: <Home className="h-5 w-5" />,
+    label: "My Kitchen",
+  },
+];
 
 interface NavigationBarProps {
   activeTab: NavigationTab;
@@ -41,33 +64,11 @@ function NavigationItem({
   );
 }
 
-export function NavigationBar({ 
+export const NavigationBar = memo(function NavigationBar({ 
   activeTab, 
   onTabChange, 
   className
 }: NavigationBarProps) {
-  const navigationItems = [
-    {
-      id: "mamas" as NavigationTab,
-      icon: <Users className="h-5 w-5" />,
-      label: "Mamas",
-    },
-    {
-      id: "recipes" as NavigationTab,
-      icon: <BookOpen className="h-5 w-5" />,
-      label: "Recipes",
-    },
-    {
-      id: "cook" as NavigationTab,
-      icon: <ChefHat className="h-5 w-5" />,
-      label: "Cook",
-    },
-    {
-      id: "kitchen" as NavigationTab,
-      icon: <Home className="h-5 w-5" />,
-      label: "My Kitchen",
-    },
-  ];
 
   return (
     <nav
@@ -94,7 +95,7 @@ export function NavigationBar({
       </div>
     </nav>
   );
-}
+});
 
 // Header component with profile
 interface HeaderProps {
@@ -180,4 +181,4 @@ export function LayoutWrapper({
       />
     </div>
   );
-} 
+}  
