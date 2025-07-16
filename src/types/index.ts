@@ -7,6 +7,13 @@ export interface User {
   updated_at: string;
 }
 
+export interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  error?: string;
+  message?: string;
+}
+
 export interface Recipe {
   id: string;
   title: string;
@@ -16,14 +23,15 @@ export interface Recipe {
   prep_time: number;
   cook_time: number;
   servings: number;
-  difficulty: 'easy' | 'medium' | 'hard';
-  cuisine: string;
+  difficulty_level: 'easy' | 'medium' | 'hard';
+  cuisine_type: string;
   image_url?: string;
-  created_by: string;
+  mama_id: string;
   created_at: string;
   updated_at: string;
   tags: string[];
-  nutrition?: Nutrition;
+  nutrition_info?: Nutrition;
+  mamas?: Mama;
 }
 
 export interface Ingredient {
@@ -56,13 +64,13 @@ export interface Nutrition {
 export interface Mama {
   id: string;
   name: string;
-  bio: string;
-  avatar_url?: string;
-  specialties: string[];
-  recipes_count: number;
-  followers_count: number;
+  cuisine_type: string;
+  personality_traits: string[];
+  voice_id?: string;
+  accent_description?: string;
+  cultural_notes?: string;
   created_at: string;
-  verified: boolean;
+  updated_at: string;
 }
 
 export interface KitchenTimer {
@@ -94,25 +102,19 @@ export interface VoiceCommand {
   timestamp: string;
 }
 
-export interface ApiResponse<T> {
-  data: T;
-  error?: string;
-  success: boolean;
-}
 
-export interface PaginatedResponse<T> {
-  data: T[];
-  pagination: {
+export interface PaginatedResponse<T> extends ApiResponse<T[]> {
+  pagination?: {
     page: number;
     limit: number;
     total: number;
-    hasMore: boolean;
+    totalPages: number;
   };
 }
 
 export interface SearchFilters {
   cuisine?: string;
-  difficulty?: Recipe['difficulty'];
+  difficulty?: Recipe['difficulty_level'];
   prep_time?: number;
   cook_time?: number;
   dietary_restrictions?: string[];
@@ -131,4 +133,4 @@ export interface ErrorBoundaryState {
   hasError: boolean;
   error?: Error;
   errorInfo?: React.ErrorInfo;
-} 
+}    

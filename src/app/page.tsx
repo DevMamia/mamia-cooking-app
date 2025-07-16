@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { 
   LayoutWrapper, 
   NavigationTab, 
@@ -10,18 +11,59 @@ import {
   RecipeCard,
   Button,
   Badge,
+  ErrorMessage,
 } from "@/components/ui";
+import { useAuth, useRecipes, useMamas } from "../hooks";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<NavigationTab>("mamas");
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+  const { recipes, loading: recipesLoading, error: recipesError } = useRecipes({ limit: 6 });
+  const { mamas, loading: mamasLoading, error: mamasError } = useMamas();
   
   const handleTabChange = (tab: NavigationTab) => {
     setActiveTab(tab);
   };
 
   const handleProfileClick = () => {
-    console.log("Profile clicked");
+    if (user) {
+      console.log("Profile clicked for user:", user.email);
+    } else {
+      router.push('/login');
+    }
   };
+
+  const handleRecipeSelect = (recipeId: string) => {
+    console.log("Recipe selected:", recipeId);
+  };
+
+  if (authLoading) {
+    return (
+      <LayoutWrapper
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        title="MAMIA"
+        onProfileClick={handleProfileClick}
+      >
+        <div className="space-y-8">
+          <div className="text-center">
+            <Skeleton className="h-8 w-64 mx-auto mb-2" />
+            <Skeleton className="h-4 w-96 mx-auto" />
+          </div>
+          <div className="space-y-4">
+            <Skeleton className="h-6 w-32" />
+            <div className="flex justify-around">
+              <Skeleton className="h-16 w-16 rounded-full" />
+              <Skeleton className="h-16 w-16 rounded-full" />
+              <Skeleton className="h-16 w-16 rounded-full" />
+            </div>
+          </div>
+        </div>
+      </LayoutWrapper>
+    );
+  }
 
   return (
     <LayoutWrapper
@@ -37,24 +79,35 @@ export default function Home() {
             Welcome to MAMIA
           </h1>
           <p className="text-gray-600">
-            Discover authentic recipes from grandmothers around the world
+            {user ? `Welcome back, ${user.email}!` : 'Discover authentic recipes from grandmothers around the world'}
           </p>
         </div>
 
-        {/* Mama Avatars Demo */}
+        {/* Mama Avatars */}
         <div className="space-y-4">
           <h2 className="text-xl font-semibold" style={{ color: 'var(--foreground)' }}>Meet the Mamas</h2>
-          <div className="flex justify-around">
-            <MamaAvatar mama="nonna" state="happy" size="large">
-              <p className="text-sm font-mono">Nonna</p>
-            </MamaAvatar>
-            <MamaAvatar mama="abuela" state="encouraging" size="large">
-              <p className="text-sm font-mono">Abuela</p>
-            </MamaAvatar>
-            <MamaAvatar mama="mae" state="thinking" size="large">
-              <p className="text-sm font-mono">Mae</p>
-            </MamaAvatar>
-          </div>
+          {mamasLoading ? (
+            <div className="flex justify-around">
+              <Skeleton className="h-16 w-16 rounded-full" />
+              <Skeleton className="h-16 w-16 rounded-full" />
+              <Skeleton className="h-16 w-16 rounded-full" />
+            </div>
+          ) : mamasError ? (
+            <ErrorMessage message={`Failed to load mamas: ${mamasError}`} />
+          ) : (
+            <div className="flex justify-around">
+              {mamas.slice(0, 3).map((mama) => (
+                <MamaAvatar 
+                  key={mama.id}
+                  mama={mama.name.toLowerCase() as "nonna" | "abuela" | "mae"} 
+                  state="happy" 
+                  size="large"
+                >
+                  <p className="text-sm font-mono">{mama.name}</p>
+                </MamaAvatar>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Voice Indicators Demo */}
@@ -73,32 +126,33 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Recipe Cards Demo */}
+        {/* Recipe Cards */}
         <div className="space-y-4">
           <h2 className="text-xl font-semibold" style={{ color: 'var(--foreground)' }}>Featured Recipes</h2>
-          <div className="grid grid-cols-1 gap-4">
-            <RecipeCard
-              title="Nonna's Homemade Pasta"
-              description="Traditional Italian pasta made from scratch with love"
-              mama="nonna"
-              cookTime="45 min"
-              servings={4}
-              difficulty="medium"
-              tags={["Italian", "Pasta", "Traditional"]}
-              onSelect={() => console.log("Recipe selected")}
-            />
-            <RecipeCard
-              title="Abuela's Empanadas"
-              description="Crispy, flaky pastries filled with savory goodness"
-              mama="abuela"
-              cookTime="1 hour"
-              servings={6}
-              difficulty="hard"
-              isOffline={true}
-              tags={["Spanish", "Pastry", "Savory"]}
-              onSelect={() => console.log("Recipe selected")}
-            />
-          </div>
+          {recipesLoading ? (
+            <div className="grid grid-cols-1 gap-4">
+              <Skeleton className="h-64 w-full" />
+              <Skeleton className="h-64 w-full" />
+            </div>
+          ) : recipesError ? (
+            <ErrorMessage message={`Failed to load recipes: ${recipesError}`} />
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {recipes.slice(0, 2).map((recipe) => (
+                <RecipeCard
+                  key={recipe.id}
+                  title={recipe.title}
+                  description={recipe.description}
+                  mama={recipe.mamas?.name.toLowerCase() as "nonna" | "abuela" | "mae" || "nonna"}
+                  cookTime={`${recipe.prep_time + recipe.cook_time} min`}
+                  servings={recipe.servings}
+                  difficulty={recipe.difficulty_level}
+                  tags={recipe.tags || []}
+                  onSelect={() => handleRecipeSelect(recipe.id)}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Polaroid Cards Demo */}

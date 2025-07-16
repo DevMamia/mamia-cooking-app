@@ -16,8 +16,10 @@ export * from "./mama-avatar";
 export * from "./voice-indicator";
 export * from "./recipe-card";
 export * from "./navigation-bar";
+export * from "./loading-spinner";
+export * from "./error-message";
 
 // Type exports
 export type { MamaType, MamaState } from "./mama-avatar";
 export type { VoiceState } from "./voice-indicator";
-export type { NavigationTab } from "./navigation-bar"; 
+export type { NavigationTab } from "./navigation-bar";        
