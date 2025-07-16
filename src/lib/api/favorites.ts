@@ -1,11 +1,12 @@
-import { ApiResponse } from '../../types';
+import { ApiResponse } from '@/types';
+import type { Recipe } from '@/types';
 
 export interface Favorite {
   id: string;
   user_id: string;
   recipe_id: string;
   created_at: string;
-  recipes?: any;
+  recipes?: Recipe;
 }
 
 export async function getFavorites(): Promise<ApiResponse<Favorite[]>> {

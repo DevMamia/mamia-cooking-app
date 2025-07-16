@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Recipe } from '../types';
-import { getRecipes, RecipesParams } from '../lib/api/recipes';
+import { Recipe } from '@/types';
+import { getRecipes, RecipesParams } from '@/lib/api/recipes';
 
 export function useRecipes(params: RecipesParams = {}) {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -36,7 +36,7 @@ export function useRecipes(params: RecipesParams = {}) {
     };
 
     fetchRecipes();
-  }, [JSON.stringify(params)]);
+  }, [params]);
 
   return { recipes, loading, error, pagination };
 }
