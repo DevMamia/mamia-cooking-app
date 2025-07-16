@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Mama } from '../types';
-import { getMamas, MamasParams } from '../lib/api/mamas';
+import { Mama } from '@/types';
+import { getMamas, MamasParams } from '@/lib/api/mamas';
 
 export function useMamas(params: MamasParams = {}) {
   const [mamas, setMamas] = useState<Mama[]>([]);
@@ -27,7 +27,7 @@ export function useMamas(params: MamasParams = {}) {
     };
 
     fetchMamas();
-  }, [JSON.stringify(params)]);
+  }, [params]);
 
   return { mamas, loading, error };
 }

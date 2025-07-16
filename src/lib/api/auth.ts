@@ -1,4 +1,5 @@
-import { User, ApiResponse } from '../../types';
+import { User, ApiResponse } from '@/types';
+import type { Session } from '@supabase/supabase-js';
 
 export interface LoginCredentials {
   email: string;
@@ -13,7 +14,7 @@ export interface SignupCredentials {
 
 export interface AuthResponse {
   user: User;
-  session: any;
+  session: Session | null;
 }
 
 export async function login(credentials: LoginCredentials): Promise<ApiResponse<AuthResponse>> {

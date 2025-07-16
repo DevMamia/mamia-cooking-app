@@ -13,7 +13,7 @@ import {
   Badge,
   ErrorMessage,
 } from "@/components/ui";
-import { useAuth, useRecipes, useMamas } from "../hooks";
+import { useAuth, useRecipes, useMamas } from "@/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {

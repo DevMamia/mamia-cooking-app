@@ -1,4 +1,4 @@
-import { User, ApiResponse } from '../../types';
+import { User, ApiResponse } from '@/types';
 
 export async function getProfile(): Promise<ApiResponse<User>> {
   const response = await fetch('/api/profiles');

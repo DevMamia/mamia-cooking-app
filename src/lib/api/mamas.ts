@@ -1,4 +1,4 @@
-import { Mama, ApiResponse } from '../../types';
+import { Mama, ApiResponse } from '@/types';
 
 export interface MamasParams {
   cuisine?: string;
