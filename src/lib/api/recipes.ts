@@ -1,4 +1,4 @@
-import { Recipe, ApiResponse, PaginatedResponse } from '../../types';
+import { Recipe, ApiResponse, PaginatedResponse } from '@/types';
 
 export interface RecipesParams {
   page?: number;

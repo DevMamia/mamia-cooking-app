@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getFavorites, Favorite } from '../lib/api/favorites';
+import { getFavorites, Favorite } from '@/lib/api/favorites';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
